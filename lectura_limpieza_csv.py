@@ -8,4 +8,17 @@ print (df_conversiones)
 df_navegacion = pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/navegacion (4).csv", sep = ";")
 print(df_navegacion)
 
-#A continuación procederemos a extraer los datos necesarios de nuestras URL
+#A continuación procederemos a extraer los datos necesarios de nuestras URL (camp:campaña; adg:adgroup; adv:advertisement; sl:sitelink ), 
+#para ellos realizaremos las funciones que nos devuelvan dichos resultados.
+def obtener_campaña():
+    #sin hacer 
+
+def obtener_adg():
+    #sin hacer 
+
+def obtener_adv():
+    #sin hacer 
+
+def obtener_sl():
+    #sin hacer 
+
