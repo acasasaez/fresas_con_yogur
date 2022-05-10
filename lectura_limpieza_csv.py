@@ -5,6 +5,7 @@ from lib2to3.pgen2 import driver
 from urllib.parse import urlparse
 import pandas as pd
 import re
+import csv
 df_conversiones= pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/conversiones (4).csv", sep = ";")
 
 
@@ -38,43 +39,88 @@ def extraerURL (DataFramen_column =[]): #Nuestra función actuará sobre la colu
 
 
 #En la segunda función queremos extraer los datos que nos aporta cada URL
-#Para creamos una función donde le pasaremos por parámetro la URL que queremos analizar, en nuestro caso serán las que aparecen en la columna url_landing
-#de nyuestro dataset 
-#A continuación nuestra función contiene 3 listas vacías que se cubrirán con los datos necesarios para finalmente obtener una lista con el conjunto de datos pedido 
-def separar_URL(Dataframe_column): 
-    Dato_para_extraer = input("Introduzca, en minúsculas, el valor de que quiere extraer de la URL")
-    lista =[] #lista vacía
-    lista_2=[]#lista vacía
-    lista_3 =[]
-    for i in Dataframe_column:
-        URL =i
-        partes_de_la_URL = URL.split("&")
-        lista.append(partes_de_la_URL)
-    for i in lista: 
-        elemento = i
-        
-        for j in elemento:
-                m =str(j).split("=")
-                lista_2.append(m)
-    for i in lista_2: 
-        elemento = i
-        for j in range(len(elemento)):
-            f = len(lista_3)
-            if elemento[0] == Dato_para_extraer:
-                
-                lista_3.append(elemento[1])
-                g =len(lista_3)
-                if f == g:
-                    lista_3.append("NULL ")
-            if Dato_para_extraer == "gclid":
-                if "gclid" in elemento[0]:
-                    dato = elemento[1]
-                    lista_3.append(dato)
-                    g =len(lista_3)
-                    if f == g:
-                        lista_3.append(" Hola soy ANdtea Tengo 15 añosssssssss")
-
-                
-
-    return lista_3
-print(separar_URL(df_navegacion["url_landing"]))
+def separar_URL (URL): 
+    gclid =[]
+    camp = []
+    uuid =[]
+    idUser =[]
+    adg = []
+    device =[]
+    adv = []
+    sl = []
+    #Valor del gclid
+    for url in URL:
+        try:
+            esp = str(url).split("gclid=")
+            bueno = esp[1].split("&")
+            gclid.append(bueno[0])
+        except:
+            gclid.append(0)
+    #Valor del id campaña
+    for url in URL:
+        try:
+            esp = str(url).split("camp=")
+            bueno = esp[1].split("&")
+            camp.append(bueno[0])
+        except:
+            camp.append(0)
+    #Valor del uuid
+    for url in URL:
+        try:
+            esp = str(url).split("uuid=")
+            bueno = esp[1].split("&")
+            uuid.append(bueno[0])
+        except:
+            uuid.append(0)
+    #Valor del id del adgroup
+    for url in URL:
+        try:
+            esp = str(url).split("adg=")
+            bueno = esp[1].split("&")
+            adg.append(bueno[0])
+        except:
+            adg.append(0)
+    #valor del adv
+    for url in URL:
+        try:
+            esp = str(url).split("adv=")
+            bueno = esp[1].split("&")
+            adv.append(bueno[0])
+        except:
+            adv.append(0)
+    #valor del sl
+    for url in URL:
+        try:
+            esp = str(url).split("sl=")
+            bueno = esp[1].split("&")
+            sl.append(bueno[0])
+        except:
+            sl.append(0)
+    
+    for url in URL:
+        try:
+            esp = str(url).split("idUser=")
+            bueno = esp[1].split("&")
+            idUser.append(bueno[0])
+        except:
+            idUser.append(0)
+    
+    for url in URL:
+        try:
+            esp = str(url).split("device=")
+            bueno = esp[1].split("&")
+            device.append(bueno[0])
+        except:
+            device.append(0)
+    
+    datos = {"gclid": gclid,
+    "camp": camp,
+    "uuid": uuid,
+    "adgroup": adg,
+    "advertisement": adv,
+    "sitelink": sl,
+    "id_User": idUser,
+    "device": device}
+    new_df = pd.DataFrame(datos)
+    new_df.to_csv("New_Navegation")
+separar_URL(df_navegacion["url_landing"])
