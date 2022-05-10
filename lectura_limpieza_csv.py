@@ -35,3 +35,46 @@ def extraerURL (DataFramen_column =[]): #Nuestra función actuará sobre la colu
 
 #extraccion_URL =extraerURL(df_navegacion["url_landing"])
 #print(extraccion_URL)
+
+
+#En la segunda función queremos extraer los datos que nos aporta cada URL
+#Para creamos una función donde le pasaremos por parámetro la URL que queremos analizar, en nuestro caso serán las que aparecen en la columna url_landing
+#de nyuestro dataset 
+#A continuación nuestra función contiene 3 listas vacías que se cubrirán con los datos necesarios para finalmente obtener una lista con el conjunto de datos pedido 
+def separar_URL(Dataframe_column): 
+    Dato_para_extraer = input("Introduzca, en minúsculas, el valor de que quiere extraer de la URL")
+    lista =[] #lista vacía
+    lista_2=[]#lista vacía
+    lista_3 =[]
+    for i in Dataframe_column:
+        URL =i
+        partes_de_la_URL = URL.split("&")
+        lista.append(partes_de_la_URL)
+    for i in lista: 
+        elemento = i
+        
+        for j in elemento:
+                m =str(j).split("=")
+                lista_2.append(m)
+    for i in lista_2: 
+        elemento = i
+        for j in range(len(elemento)):
+            f = len(lista_3)
+            if elemento[0] == Dato_para_extraer:
+                
+                lista_3.append(elemento[1])
+                g =len(lista_3)
+                if f == g:
+                    lista_3.append("NULL ")
+            if Dato_para_extraer == "gclid":
+                if "gclid" in elemento[0]:
+                    dato = elemento[1]
+                    lista_3.append(dato)
+                    g =len(lista_3)
+                    if f == g:
+                        lista_3.append(" Hola soy ANdtea Tengo 15 añosssssssss")
+
+                
+
+    return lista_3
+print(separar_URL(df_navegacion["url_landing"]))
