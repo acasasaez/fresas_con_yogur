@@ -122,5 +122,5 @@ def separar_URL (URL):
     "id_User": idUser,
     "device": device}
     new_df = pd.DataFrame(datos)
-    new_df.to_csv("New_Navegation")
+    new_df.to_csv("New_Navegation.csv")
 separar_URL(df_navegacion["url_landing"])
