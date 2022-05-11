@@ -24,7 +24,7 @@ limpiar (df_conversiones["gclid"])# y sobre la columna de gclid, que son las que
 new_df = pd.DataFrame(df_conversiones) #con los datos modificados de navegación creamos un Dataframe 
 new_df.to_csv("nuevo_conversor_final.csv")#que guardaremos en el nuevo csv "nuevo_conversor_final"
 df_nuevo_conversor_final = pd.read_csv (r"nuevo_conversor_final.csv") #con panda creamos una variable que nos permita trabajar con este nuevo dataset
-#nuevo_conversor = df_nuevo_conversor_final.dropna()
+nuevo_conversor = df_nuevo_conversor_final.dropna()
 #print (df_conversiones)
 #print(df_navegacion)
 
@@ -139,3 +139,17 @@ m.sort_values ("ts", ascending= False)
 #Volvemos a crear un archivo csv que recoja nuestro dataset final 
 new_df = pd.DataFrame(m)
 new_df.to_csv("navegacion_final.csv")
+df_navegacion_final = pd.read_csv(r"navegacion_final.csv")
+
+def conversiones (dat_1, dat_2): 
+    conversiones =[]
+    for i in dat_1:
+        if i in dat_2:
+            conversiones.append(1)
+        else: 
+            conversiones.append(0)
+    return conversiones 
+#print(conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"] ))
+#print(conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"] ))
+conversiones_por_iduser= df_navegacion_final["id_User"], nuevo_conversor["id_user"]
+conversiones_por_gclid = df_navegacion_final["gclid"], nuevo_conversor["gclid"]

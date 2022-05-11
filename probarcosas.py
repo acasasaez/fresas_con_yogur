@@ -4,28 +4,14 @@ print(Fore.MAGENTA+"Motomami "+ Fore.LIGHTCYAN_EX + "Motomami" )
 
 import re
 
-movimientos = {
-        'arr': 0,
-        'aba': 2,
-        'izq': 0,
-        'der': 0
-    }
 
+def conversiones (dat_1, dat_2): 
+    conversiones =[]
+    for i in dat_1:
+        if i in dat_2:
+            conversiones.append(1)
+        else: 
+            conversiones.append(0)
+    return conversiones 
 
-def main():
-        entrie = None
-        while entrie != '*FIN*':
-            print('Ingrese el movimiento, *FIN* para terminar\n')
-            entrie = input('DIRECCION, DISTANCIA [m]: ')
-            matchs = re.match(
-                          pattern=r'^(arr|aba|izq|der)\s([0-9])+', 
-                          string=entrie, 
-                          flags=re.IGNORECASE
-                     )
-            if entrie != '*FIN*':
-               if matchs:
-                    movimientos[matchs.group(1)] += int(matchs.group(2))
-               else:
-                    print('Opción no valida')
-
-        print(movimientos)
+print(conversiones ([1,2,3,5,7], [1,6,7,2,4]))
