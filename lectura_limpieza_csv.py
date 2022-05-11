@@ -1,6 +1,7 @@
 #1) Comenzamos importando pandas para poder leer nuestros archivos csv
 #2) Nos damos cuenta de que en nuestros archivos csv los elementos de las filas vienen separados por puntos y cmas;
 #por lo tanto es necesario indicar el separador (sep =";") para que sea posible la lectura de nuestro archivo csv.
+from http.client import CannotSendRequest
 from lib2to3.pgen2 import driver
 from urllib.parse import urlparse
 import pandas as pd
@@ -156,4 +157,30 @@ conversiones_por_gclid = conversiones(df_navegacion_final["gclid"], nuevo_conver
 ) 
 #print(len(conversiones_por_iduser))
 #print(len(conversiones_por_gclid))
+
+#Ver cual es el coche más visitado de la página.
+cars = {
+    
+}
+
+for i in range(resultado.shape[0]):
+    m = re.search("http(?:s?):\/(?:\/?)www\.metropolis\.com\/es\/(.+?)\/.*", str(resultado._get_value(i, "Url_landing")))
+    if m != None:
+        if m.groups()[0] in cars:
+            cars[m.groups()[0]] += 1
+        else:
+            cars[m.groups()[0]] = 1
+        
+
+
+
+list_keys =list(cars.keys()) 
+list_values = list(cars.values())
+
+for i in range (len(list_values)-1):
+    if list_values[i] < list_values[i+1]:
+        m = list_values[i+1]
+
+
+
 
