@@ -10,12 +10,21 @@ df_conversiones= pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/
 
 
 df_navegacion = pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/navegacion (4).csv", sep = ";")
-
-
+#39 Creamos una función para modificar nuestro dataset navegacion para sustituir los "None" por espacios en blanco 
+def limpiar(dato =[]): #Para esta función se puede pasar por parámetro una variable o si no tomará el valor de una lista vacía
+    for i in range (len(dato)): #recorremos la lista pasada por parámetro, i toma los valores desde 0 hasta el valor del número de elemetos de nuestra lista
+        if dato[i] == "None": 
+            dato [i]= " "
+    return dato
+limpiar (df_conversiones["id_user"])
+limpiar (df_conversiones["gclid"])
 #a continuación limpairemos el dataset, para esto emplearemos el método dropna de pandas, que nos permitirá eliminar aquellas filas que cuenten con algún valor nulo
-df_conversiones=df_conversiones.dropna()
-df_navegacion = df_navegacion.dropna()
 
+df_navegacion = df_navegacion.dropna()
+new_df = pd.DataFrame(df_conversiones)
+new_df.to_csv("nuevo_conversor_final.csv")
+df_nuevo_conversor_final = pd.read_csv (r"nuevo_conversor_final.csv")
+nuevo_conversor = df_nuevo_conversor_final.dropna()
 #print (df_conversiones)
 #print(df_navegacion)
 
