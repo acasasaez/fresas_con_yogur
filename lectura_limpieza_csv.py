@@ -131,13 +131,13 @@ separar_URL(df_navegacion["url_landing"])
 resultado = pd.read_csv(r"New_Navegation.csv")
 #En este dataset eliminamos aquellos elementos que cuenten con id User repetido 
 m =resultado.drop_duplicates(subset=["id_User"])
+a = m.drop_duplicates ( subset = ["gclid"])
 #print(m)
 #Ordenamos los valores del detaset limpio en función del valor de ts 
-m.sort_values ("ts", ascending= False)
-
+a.sort_values ("ts", ascending= False)
 
 #Volvemos a crear un archivo csv que recoja nuestro dataset final 
-new_df = pd.DataFrame(m)
+new_df = pd.DataFrame(a)
 new_df.to_csv("navegacion_final.csv")
 df_navegacion_final = pd.read_csv(r"navegacion_final.csv")
 
@@ -151,5 +151,8 @@ def conversiones (dat_1, dat_2):
     return conversiones 
 #print(conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"] ))
 #print(conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"] ))
-conversiones_por_iduser= df_navegacion_final["id_User"], nuevo_conversor["id_user"]
-conversiones_por_gclid = df_navegacion_final["gclid"], nuevo_conversor["gclid"]
+conversiones_por_iduser= conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"])
+conversiones_por_gclid = conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"]
+) 
+print(len(conversiones_por_iduser))
+print(len(conversiones_por_gclid))
