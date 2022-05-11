@@ -201,6 +201,8 @@ def obtener_conversiones():
             convierte_FORM +=1
     print("El número total de conversiones tipo call es", convierte_CALL)
     print("El número total de conversiones tipo form es", convierte_FORM)
+def usuarios_recurrentes(Usuarios_repetidos, usuarios_sin_repetir):
+   return usuarios_sin_repetir*100//Usuarios_repetidos
 print("Inicialmente se nos ofrece un dataset con", contar(df_navegacion["id_user"]), "datos")
 print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de",contar(df_navegacion1["id_user"]), "usuarios")
 print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", contar(df_navegacion_final["id_User"]), "datos")
@@ -216,3 +218,4 @@ print("lo que nos indica que contamos con un 0% de converisones")
 print("")
 print("Si los usiuarios del dataset navegacion_final contaran con los usuarios del dataset de conversionesentonces obtendríamos lo siguiente:")
 obtener_conversiones()
+print("El número de usuarios recurrentes es de ", usuarios_recurrentes(contar(df_navegacion1["id_user"]),  contar(df_navegacion_final["id_User"])), "%")
