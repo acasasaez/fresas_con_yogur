@@ -126,4 +126,12 @@ def separar_URL (URL):
     new_df.to_csv("New_Navegation.csv")
 separar_URL(df_navegacion["url_landing"])
 
+resultado = pd.read_csv(r"New_Navegation.csv")
+m =resultado.drop_duplicates(subset=["id_User"])
+#print(m)
+m.sort_values ("ts", ascending= False)
 
+print(m)
+
+new_df = pd.DataFrame(m)
+new_df.to_csv("navegacion_final.csv")
