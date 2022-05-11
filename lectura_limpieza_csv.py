@@ -10,45 +10,29 @@ df_conversiones= pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/
 
 
 df_navegacion = pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/navegacion (4).csv", sep = ";")
-#39 Creamos una función para modificar nuestro dataset navegacion para sustituir los "None" por espacios en blanco 
+#3) Creamos una función para modificar nuestro dataset navegacion para sustituir los "None" por espacios en blanco 
 def limpiar(dato =[]): #Para esta función se puede pasar por parámetro una variable o si no tomará el valor de una lista vacía
     for i in range (len(dato)): #recorremos la lista pasada por parámetro, i toma los valores desde 0 hasta el valor del número de elemetos de nuestra lista
-        if dato[i] == "None": 
-            dato [i]= " "
-    return dato
-limpiar (df_conversiones["id_user"])
-limpiar (df_conversiones["gclid"])
+        if dato[i] == "None": # si el elemento en posición i toma el valor de "None"
+            dato [i]= " "#ese elemento se sustituye por un espacio en blanco 
+    return dato # finalmente nuestra función nos devuelve la lista con espacios en blanco en las posiciones donde antes teníamos el str "None"
+limpiar (df_conversiones["id_user"]) #aplicamos la función sobre la columna de los id users del dataset conversiones
+limpiar (df_conversiones["gclid"])# y sobre la columna de gclid, que son las que nos interesan 
 #a continuación limpairemos el dataset, para esto emplearemos el método dropna de pandas, que nos permitirá eliminar aquellas filas que cuenten con algún valor nulo
 
-df_navegacion = df_navegacion.dropna()
-new_df = pd.DataFrame(df_conversiones)
-new_df.to_csv("nuevo_conversor_final.csv")
-df_nuevo_conversor_final = pd.read_csv (r"nuevo_conversor_final.csv")
-nuevo_conversor = df_nuevo_conversor_final.dropna()
+
+new_df = pd.DataFrame(df_conversiones) #con los datos modificados de navegación creamos un Dataframe 
+new_df.to_csv("nuevo_conversor_final.csv")#que guardaremos en el nuevo csv "nuevo_conversor_final"
+df_nuevo_conversor_final = pd.read_csv (r"nuevo_conversor_final.csv") #con panda creamos una variable que nos permita trabajar con este nuevo dataset
+#nuevo_conversor = df_nuevo_conversor_final.dropna()
 #print (df_conversiones)
 #print(df_navegacion)
 
-#Pasamos a la fase 1.2, ahora debemos obtener la siguiente información a partir de nuestra URL (camp: campaña; adg:adgroup; adv:advertisement; sl:sielink)
-
-
-#a continuación elaboraremos las funciones que nos permitan obtener dicha información a partir de las url 
-#En la primera función necesitamos extraer todas las url de nuestro dataset
-def extraerURL (DataFramen_column =[]): #Nuestra función actuará sobre la columna del dataframe introducida 
-    i=int(input("Itroduzca un número entero: ")) #damos un valor entero a i
-
-    if i < len(DataFramen_column): #mientras i esté en el rango de la lista
-        Url = DataFramen_column[i]
-        return Url #nuestra función nos devuelve el elemento de la columna del dataframe en esta posición 
-    else:
-        print("Nuestro dataset no cuenta con elementos en dicha posición, por favor introduzca otro valor") #en caso contrario se da un mensaje que nos indica que estamos buscando una posición que no existe en nuestra lista 
-        return extraerURL(DataFramen_column) #la función se repite hasta introducir un valor válido 
-
-#extraccion_URL =extraerURL(df_navegacion["url_landing"])
-#print(extraccion_URL)
-
-
-#En la segunda función queremos extraer los datos que nos aporta cada URL
-def separar_URL (URL): 
+#4)Por otro lado nos encargamos de limpar el dataset de navegación, para eso nos desharemos de aquellas filas que cuenten con elementos vacíos 
+df_navegacion = df_navegacion.dropna()
+#5) Ahora queremos extraer todos los datos que nos aportan  las URL de nuestro dataset
+def separar_URL (URL): #Para esto creamos una función paqra separar las URL, a la que le pasaremos por parámetro la lista de URLs
+#Empezamos creando las listas que rellenaremos con los datos de interés que extraeremos de nuestras URL
     gclid =[]
     camp = []
     uuid =[]
@@ -57,10 +41,15 @@ def separar_URL (URL):
     device =[]
     adv = []
     sl = []
+#A continuación extraemos los datos y para esto: 
+    #1. Recorremos la lista de URLs 
+    #2. Indicamos los separadores entre los que se encuentra nuestro datos de interés
+    #3. Si esto no es posible porque nuestra URL no aporta información sobre este dato entonces se añade un 0 a la lista de datos 
+#Con esto, obtendremos las listas que recojan los datos de gclid, campañaa, uuid, id User, adgroup, device, advertisement y site link
     #Valor del gclid
     for url in URL:
         try:
-            esp = str(url).split("gclid=")
+            esp = str(url).split("gclid=") 
             bueno = esp[1].split("&")
             gclid.append(bueno[0])
         except:
@@ -105,7 +94,7 @@ def separar_URL (URL):
             sl.append(bueno[0])
         except:
             sl.append(0)
-    
+    #Valor del id User 
     for url in URL:
         try:
             esp = str(url).split("idUser=")
@@ -113,7 +102,7 @@ def separar_URL (URL):
             idUser.append(bueno[0])
         except:
             idUser.append(0)
-    
+    #Valor     
     for url in URL:
         try:
             esp = str(url).split("device=")
@@ -121,7 +110,7 @@ def separar_URL (URL):
             device.append(bueno[0])
         except:
             device.append(0)
-    
+#Creamos un diccionario con los datos de interés
     datos = {"gclid": gclid,
     "camp": camp,
     "uuid": uuid,
@@ -130,17 +119,23 @@ def separar_URL (URL):
     "sitelink": sl,
     "id_User": idUser,
     "device": device,
-    "ts":df_navegacion["ts"]}
+    "ts":df_navegacion["ts"],
+    "Url_landing":df_navegacion["url_landing"]}
     new_df = pd.DataFrame(datos)
+#Creamos un nuevo archivo csv que contenga todos estos datos 
     new_df.to_csv("New_Navegation.csv")
+#Llevamos a cabo nuestra función sobre la columna de URLs de nuestro Dataset inicial, por lo tanto nuestro nuevo dataset contiene los datos extraídos de de las URLs
+#del dataset que se nos aporta 
 separar_URL(df_navegacion["url_landing"])
-
+#Volvemos a empleaer Pandas para leer nuestro nuevo dataset 
 resultado = pd.read_csv(r"New_Navegation.csv")
+#En este dataset eliminamos aquellos elementos que cuenten con id User repetido 
 m =resultado.drop_duplicates(subset=["id_User"])
 #print(m)
+#Ordenamos los valores del detaset limpio en función del valor de ts 
 m.sort_values ("ts", ascending= False)
 
-print(m)
 
+#Volvemos a crear un archivo csv que recoja nuestro dataset final 
 new_df = pd.DataFrame(m)
 new_df.to_csv("navegacion_final.csv")
