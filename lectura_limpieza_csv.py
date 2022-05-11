@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import pandas as pd
 import re
 import csv
+import matplotlib.pyplot as plt
 df_conversiones= pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/conversiones (4).csv", sep = ";")
 
 
@@ -203,6 +204,15 @@ def obtener_conversiones():
     print("El número total de conversiones tipo form es", convierte_FORM)
 def usuarios_recurrentes(Usuarios_repetidos, usuarios_sin_repetir):
    return usuarios_sin_repetir*100//Usuarios_repetidos
+
+def grafica_sectores (usuarios_repetidos,usuarios_sin_repetir):
+  
+  valores = [usuarios_repetidos,usuarios_sin_repetir]
+  nombres =["Usuarios Repetidos","Usuarios sin repetir"]
+  colores = ["#55CBCD","#FFDAC1"]
+  plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
+  plt.savefig('diagrama-sectores.png')
+  plt.show()
 print("Inicialmente se nos ofrece un dataset con", contar(df_navegacion["id_user"]), "datos")
 print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de",contar(df_navegacion1["id_user"]), "usuarios")
 print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", contar(df_navegacion_final["id_User"]), "datos")
@@ -219,3 +229,4 @@ print("")
 print("Si los usiuarios del dataset navegacion_final contaran con los usuarios del dataset de conversionesentonces obtendríamos lo siguiente:")
 obtener_conversiones()
 print("El número de usuarios recurrentes es de ", usuarios_recurrentes(contar(df_navegacion1["id_user"]),  contar(df_navegacion_final["id_User"])), "%")
+grafica_sectores(contar(df_navegacion1["id_user"])-contar(df_navegacion_final["id_User"]),  contar(df_navegacion_final["id_User"]))
