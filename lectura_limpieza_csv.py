@@ -3,6 +3,7 @@
 #por lo tanto es necesario indicar el separador (sep =";") para que sea posible la lectura de nuestro archivo csv.
 from http.client import CannotSendRequest
 from lib2to3.pgen2 import driver
+from pyexpat.errors import codes
 from urllib.parse import urlparse
 import pandas as pd
 import re
@@ -15,8 +16,9 @@ df_navegacion = pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/f
 def limpiar(dato =[]): #Para esta función se puede pasar por parámetro una variable o si no tomará el valor de una lista vacía
     for i in range (len(dato)): #recorremos la lista pasada por parámetro, i toma los valores desde 0 hasta el valor del número de elemetos de nuestra lista
         if dato[i] == "None": # si el elemento en posición i toma el valor de "None"
-            dato [i]= " "#ese elemento se sustituye por un espacio en blanco 
-    return dato # finalmente nuestra función nos devuelve la lista con espacios en blanco en las posiciones donde antes teníamos el str "None"
+             dato [i]= " "
+        #ese elemento se sustituye por un espacio en blanco 
+    # finalmente nuestra función nos devuelve la lista con espacios en blanco en las posiciones donde antes teníamos el str "None"
 limpiar (df_conversiones["id_user"]) #aplicamos la función sobre la columna de los id users del dataset conversiones
 limpiar (df_conversiones["gclid"])# y sobre la columna de gclid, que son las que nos interesan 
 #a continuación limpairemos el dataset, para esto emplearemos el método dropna de pandas, que nos permitirá eliminar aquellas filas que cuenten con algún valor nulo
@@ -30,7 +32,7 @@ nuevo_conversor = df_nuevo_conversor_final.dropna()
 #print(df_navegacion)
 
 #4)Por otro lado nos encargamos de limpar el dataset de navegación, para eso nos desharemos de aquellas filas que cuenten con elementos vacíos 
-df_navegacion = df_navegacion.dropna()
+df_navegacion1 = df_navegacion.dropna()
 #5) Ahora queremos extraer todos los datos que nos aportan  las URL de nuestro dataset
 def separar_URL (URL): #Para esto creamos una función paqra separar las URL, a la que le pasaremos por parámetro la lista de URLs
 #Empezamos creando las listas que rellenaremos con los datos de interés que extraeremos de nuestras URL
@@ -120,14 +122,14 @@ def separar_URL (URL): #Para esto creamos una función paqra separar las URL, a 
     "sitelink": sl,
     "id_User": idUser,
     "device": device,
-    "ts":df_navegacion["ts"],
-    "Url_landing":df_navegacion["url_landing"]}
+    "ts":df_navegacion1["ts"],
+    "Url_landing":df_navegacion1["url_landing"]}
     new_df = pd.DataFrame(datos)
 #Creamos un nuevo archivo csv que contenga todos estos datos 
     new_df.to_csv("New_Navegation.csv")
 #Llevamos a cabo nuestra función sobre la columna de URLs de nuestro Dataset inicial, por lo tanto nuestro nuevo dataset contiene los datos extraídos de de las URLs
 #del dataset que se nos aporta 
-separar_URL(df_navegacion["url_landing"])
+separar_URL(df_navegacion1["url_landing"])
 #Volvemos a empleaer Pandas para leer nuestro nuevo dataset 
 resultado = pd.read_csv(r"New_Navegation.csv")
 #En este dataset eliminamos aquellos elementos que cuenten con id User repetido 
@@ -159,28 +161,58 @@ conversiones_por_gclid = conversiones(df_navegacion_final["gclid"], nuevo_conver
 #print(len(conversiones_por_gclid))
 
 #Ver cual es el coche más visitado de la página.
-cars = {
+def contar(dato=[]):
+    return len(dato)
+
+def Onbtener_valor():
+    cars = {
     
 }
-
-for i in range(resultado.shape[0]):
-    m = re.search("http(?:s?):\/(?:\/?)www\.metropolis\.com\/es\/(.+?)\/.*", str(resultado._get_value(i, "Url_landing")))
-    if m != None:
-        if m.groups()[0] in cars:
-            cars[m.groups()[0]] += 1
-        else:
-            cars[m.groups()[0]] = 1
-        
-
+    for i in range(resultado.shape[0]):
+        m = re.search("http(?:s?):\/(?:\/?)www\.metropolis\.com\/es\/(.+?)\/.*", str(resultado._get_value(i, "Url_landing")))
+        if m != None:
+            if m.groups()[0] in cars:
+                cars[m.groups()[0]] += 1
+            else:
+                cars[m.groups()[0]] = 1
+            
 
 
-list_keys =list(cars.keys()) 
-list_values = list(cars.values())
+    lista_valores =[]
+    for i in cars.values ():
+        lista_valores.append(i)
+    lista_keys =[]
+    for i in cars.keys():
+        lista_keys.append(i)
 
-for i in range (len(list_values)-1):
-    if list_values[i] < list_values[i+1]:
-        m = list_values[i+1]
+    mayor_num_visitas = max(lista_valores)
+    for i in range (len(lista_valores)): 
+        if mayor_num_visitas == lista_valores[i]:
+            return lista_keys[i]
 
 
-
-
+def obtener_conversiones(): 
+    convierte_FORM =0
+    convierte_CALL =0
+    for i in df_conversiones["lead_type"]: 
+        if i == "CALL":
+            convierte_CALL +=1
+        elif i == "FORM":
+            convierte_FORM +=1
+    print("El número total de conversiones tipo call es", convierte_CALL)
+    print("El número total de conversiones tipo form es", convierte_FORM)
+print("Inicialmente se nos ofrece un dataset con", contar(df_navegacion["id_user"]), "datos")
+print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de",contar(df_navegacion1["id_user"]), "usuarios")
+print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", contar(df_navegacion_final["id_User"]), "datos")
+print(" ")
+print("Como el número de visitas que recibe una URL es independiente a si esta es visitada por la misma persona o no, concluimos que el número total de visitas será de ",contar(df_navegacion1["url_landing"]))
+print("")
+print("El coche más buscado es", Onbtener_valor())
+print(" ")
+print(" Tras obtener la lista de 0 y 1 para comparar los usuarios y gclid coincidentes en los archivos conversiones y navegacion finalobtenemos:")
+print(conversiones_por_iduser)
+print(conversiones_por_gclid)
+print("lo que nos indica que contamos con un 0% de converisones")
+print("")
+print("Si los usiuarios del dataset navegacion_final contaran con los usuarios del dataset de conversionesentonces obtendríamos lo siguiente:")
+obtener_conversiones()
