@@ -154,5 +154,6 @@ def conversiones (dat_1, dat_2):
 conversiones_por_iduser= conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"])
 conversiones_por_gclid = conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"]
 ) 
-print(len(conversiones_por_iduser))
-print(len(conversiones_por_gclid))
+#print(len(conversiones_por_iduser))
+#print(len(conversiones_por_gclid))
+
