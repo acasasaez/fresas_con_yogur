@@ -201,20 +201,28 @@ def Onbtener_valor():
         if mayor_num_visitas == lista_valores[i]:
             return lista_keys[i]
 
-
+#Ahora creamos una función que rcuente el número de conversiones de cada tipo
 def obtener_conversiones(): 
-    convierte_FORM =0
+    #añadimos 2 variables qde vaor int y 0 
+    #Una terminará tomando el valor de número de conversiones tipo call y la otra del tipo form
+    convierte_FORM =0 
     convierte_CALL =0
+    #Recorremos la lista del archivo conversiones donde se nos muestra el tipo de conversión de cada caso
+    #i toma el valor "CALL" o "FORM"
     for i in df_conversiones["lead_type"]: 
-        if i == "CALL":
+        if i == "CALL": #si toma el valor call entonces la variable donde contamos el número de conversiones de este tipo suma una unidad de valor
             convierte_CALL +=1
-        elif i == "FORM":
+        elif i == "FORM": # en caso contrario, la variable donde contamos el número de conversiones de tipo form suma una unidad de valor
             convierte_FORM +=1
+        #Imprimimos el total de conversiones de cada tipo
     print("El número total de conversiones tipo call es", convierte_CALL)
     print("El número total de conversiones tipo form es", convierte_FORM)
+
+#Cálculo numérico del porcentaje de usuarios recurentes
 def usuarios_recurrentes(Usuarios_repetidos, usuarios_sin_repetir):
    return usuarios_sin_repetir*100//Usuarios_repetidos
 
+#Cálculo gráfico del porcentaje de ususarios recurrentes
 def grafica_sectores (usuarios_repetidos,usuarios_sin_repetir):
   
   valores = [usuarios_repetidos,usuarios_sin_repetir]
@@ -223,6 +231,9 @@ def grafica_sectores (usuarios_repetidos,usuarios_sin_repetir):
   plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
   plt.savefig('diagrama-sectores.png')
   plt.show()
+#Imprimimos las respuestas a las preguntas
+print("RESPUESTAS")
+print(" ")
 print("Inicialmente se nos ofrece un dataset con", contar(df_navegacion["id_user"]), "datos")
 print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de",contar(df_navegacion1["id_user"]), "usuarios")
 print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", contar(df_navegacion_final["id_User"]), "datos")
