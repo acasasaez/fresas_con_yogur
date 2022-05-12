@@ -145,27 +145,32 @@ new_df = pd.DataFrame(a)
 new_df.to_csv("navegacion_final.csv")
 df_navegacion_final = pd.read_csv(r"navegacion_final.csv")
 
-def conversiones (dat_1, dat_2): 
-    conversiones =[]
-    for i in dat_1:
-        if i in dat_2:
-            conversiones.append(1)
-        else: 
-            conversiones.append(0)
+#Creamos una función que nos calcule el número de conversiones 
+def conversiones (dat_1, dat_2): #Pasamos 2 listas que queremos comparar
+    conversiones =[] #conversiones es una variable tipo list que toma el valor de lista vacía
+    for i in dat_1: #´recorremos la primera lista e i toma el valor de los elementos de la primera lista
+        if i in dat_2: #si un elemento de l a lista 1 está en la lista 2, entonces 
+            conversiones.append(1) #ñla lista conversiones añade un uno
+        else: #en caso contrario
+            conversiones.append(0)#añadir 0
     return conversiones 
 #print(conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"] ))
 #print(conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"] ))
+#comparamos las listas del dataset navegación final y el dataset nuevo conversor comparando las columnas que nos aportan los id user y los gclid
 conversiones_por_iduser= conversiones(df_navegacion_final["id_User"], nuevo_conversor["id_user"])
 conversiones_por_gclid = conversiones(df_navegacion_final["gclid"], nuevo_conversor["gclid"]
 ) 
 #print(len(conversiones_por_iduser))
 #print(len(conversiones_por_gclid))
 
-#Ver cual es el coche más visitado de la página.
+#FUNCIÓN INÚTIL, es equivalente a len()
 def contar(dato=[]):
     return len(dato)
 
+
+#Creamos una función que nos permita obtener el valor del coche más vendido
 def Onbtener_valor():
+   #empezamos creando un diccionario donde añadimos los tipos de coche y el número de búsquedas
     cars = {
     
 }
@@ -178,10 +183,12 @@ def Onbtener_valor():
                 cars[m.groups()[0]] = 1
             
 
-
+ #lista_valores es un elemento tipo list, inicialmente una lista vacía 
+  # creamos un bucle que nos devuelve los valores del diccionario y los añade a nuestra lista de valores
     lista_valores =[]
     for i in cars.values ():
         lista_valores.append(i)
+    #lista_keys es un elemento tipo list, inicalmente
     lista_keys =[]
     for i in cars.keys():
         lista_keys.append(i)
