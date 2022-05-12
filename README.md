@@ -278,6 +278,23 @@ def grafica_sectores (usuarios_repetidos,usuarios_sin_repetir):
   plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
   plt.savefig('diagrama-sectores.png')
   plt.show()
+
+def sectores_2(lista1, lista2, a):
+  lista_intermedios =[]
+  for i in lista1: 
+      if i == 1:
+          lista_intermedios.append(1)
+  h =len(lista_intermedios)
+  v = len (lista2)
+  valores = [v,h]
+  nombres =["Usuarios que no convierten","Usuarios que convierten"]
+  colores = ["#55CBCD","#FFDAC1"]
+  plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
+  if a == 2:
+    plt.savefig('diagrama-sectores-conversiones-id.png')
+  elif a == 3:
+      plt.savefig('diagrama-sectores-conversiones-gclid.png')
+  plt.show()
 #Imprimimos las respuestas a las preguntas
 print(Fore.LIGHTCYAN_EX + "RESPUESTAS"+ Fore.WHITE)
 print(" ")
@@ -290,8 +307,11 @@ print("")
 print("El coche más buscado es", Fore.LIGHTYELLOW_EX + Onbtener_valor() + Fore.WHITE)
 print(" ")
 print(" Tras obtener la lista de 0 y 1 para comparar los usuarios y gclid coincidentes en los archivos conversiones y navegacion finalobtenemos:")
+
 print(conversiones_por_iduser)
 print(conversiones_por_gclid)
+sectores_2(conversiones_por_iduser, df_navegacion_final["id_User"], 2)
+sectores_2(conversiones_por_iduser, df_navegacion_final["gclid"], 3)
 print("lo que nos indica que contamos con un 0% de converisones")
 print("")
 print("Si los usiuarios del dataset navegacion_final contaran con los usuarios del dataset de conversionesentonces obtendríamos lo siguiente:")
