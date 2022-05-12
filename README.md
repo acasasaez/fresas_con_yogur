@@ -29,7 +29,7 @@ El siguiente paso será comparar los datos de navegación con los de conversión
 
 A mayores para poder responder a las preguntas relizaremos algunas funciones más: 
 
-Una que nos permita contar el número de conversiones de cada tipo (call o form)
+Una que nos permita contar el número de conversiones de cada tipo (call o form) y además esta función nos devolverá un gráfico de sectores donde se refleje el procentaje de conversiones FROM frente a CALL
 
 Una que nos permita saber cuál ha sido el coche más buscado 
 
