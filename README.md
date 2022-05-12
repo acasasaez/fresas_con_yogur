@@ -3,7 +3,7 @@ Para esta tarea he creado un repositorio en GitHubcon el siguiente link:https://
 
 El examen final es una tarea en la que se nos pide hacer un estudio sobre la venta de coches. 
 
-Para esto inicialmente se nos aportan 2 archivos csv. Uno sobre la navegación, en el que se encuentran  los datos de navegación (donde tenemos como dato principal de las páginas web de ventas de coche); y el de conversión, donde se nos dan datos sobre cómo algubos usuarios actúan tras visitar la página web. 
+Para esto inicialmente se nos aportan 2 archivos csv. Uno sobre la navegación, en el que se encuentran  los datos de navegación (donde tenemos como dato principal las URL de las páginas web de ventas de coche); y el de conversión, donde se nos dan datos sobre cómo algunos usuarios actúan tras visitar la página web. 
 
 finalmente se nos realizan las siguientes preguntas:
 
@@ -17,11 +17,11 @@ Coche más visitado
 
 Para poder llevar a cabo la práctica es fundamental comenzar haciendo un estudio profundo sobre los datos de navegación.
 
-Las URL los aportarán toda la información que necesitaremos para hacer el ejercicio, y aunque algunas de las columnas del dataset de navegación parecen aportar datols de utilidad, estos son incorrectos. 
+Las URL los aportarán toda la información que necesitaremos para hacer el ejercicio, y aunque algunas de las columnas del dataset de navegación parecen aportar datos de utilidad, estos son incorrectos. 
 
-Por esta razón, lo primerco que tendremos que hacer será quedarnos solo con aquellas columnas del dataset que cuenten con Url landing, para esto emplearfemos la función dropna de pandas. 
+Por esta razón, lo primero que tendremos que hacer será quedarnos solo con aquellas columnas del dataset que cuenten con Url landing, para esto emplearemos la función dropna de pandas. 
 
-Ahora crearemos la función que nos permita la columna de URL landing y trozear la misma, extrayendo de la misma los datos que nos aporta y elaborando un nuevo csv que recoja dichos datos. 
+Ahora crearemos la función que nos permita la columna de URL landing y trozear la misma, extrayendo de esta los datos que nos aporta y elaborando un nuevo csv que recoja dichos datos. 
 
 A continuación, lipiaremos este nuevo csv quedándonos solo con aquellas filas que no cuenten con usuarios ni gclids repetidos. Obtenemos nuestro csv final.
 
