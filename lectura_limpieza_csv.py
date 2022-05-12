@@ -215,6 +215,12 @@ def obtener_conversiones():
         elif i == "FORM": # en caso contrario, la variable donde contamos el número de conversiones de tipo form suma una unidad de valor
             convierte_FORM +=1
         #Imprimimos el total de conversiones de cada tipo
+    valores = [convierte_FORM , convierte_CALL]
+    nombres =["Usuarios que convierten FORM","Usuarios que convierten CALL"]
+    colores = ["#55CBCD","#FFDAC1"]
+    plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
+    plt.savefig('diagrama-sectores-forma-convers.png')
+    plt.show()
     print("El número total de conversiones tipo call es", convierte_CALL)
     print("El número total de conversiones tipo form es", convierte_FORM)
 
