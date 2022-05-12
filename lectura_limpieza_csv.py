@@ -188,12 +188,15 @@ def Onbtener_valor():
     lista_valores =[]
     for i in cars.values ():
         lista_valores.append(i)
-    #lista_keys es un elemento tipo list, inicalmente
+    #lista_keys es un elemento tipo list, inicalmente una lista vacía 
+    #a partir de un vucle for recorrem os los elementos de las keys del diccionario añadiéndolos a nuestra lista de keys
     lista_keys =[]
     for i in cars.keys():
         lista_keys.append(i)
-
+    #obtenemos el número mayor de nuestra lista de valores
     mayor_num_visitas = max(lista_valores)
+    #recorremos nuestra lista de valores y cuando i tome el valor máximo buscamos el valor de la lista de llaves que se encuentre en la misma posicioón
+    #finalemente la función devuelve este valor, el coche más buscado
     for i in range (len(lista_valores)): 
         if mayor_num_visitas == lista_valores[i]:
             return lista_keys[i]
