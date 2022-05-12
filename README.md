@@ -49,6 +49,7 @@ import pandas as pd
 import re
 import csv
 import matplotlib.pyplot as plt
+from colorama import* 
 df_conversiones= pd.read_csv(r"C:/Users/andre/OneDrive/Escritorio/Programación/fresas_con_yogur/conversiones (4).csv", sep = ";")
 
 
@@ -255,6 +256,12 @@ def obtener_conversiones():
         elif i == "FORM": # en caso contrario, la variable donde contamos el número de conversiones de tipo form suma una unidad de valor
             convierte_FORM +=1
         #Imprimimos el total de conversiones de cada tipo
+    valores = [convierte_FORM , convierte_CALL]
+    nombres =["Usuarios que convierten FORM","Usuarios que convierten CALL"]
+    colores = ["#55CBCD","#FFDAC1"]
+    plt.pie(valores, labels=nombres, autopct="%0.1f %%", colors=colores)
+    plt.savefig('diagrama-sectores-forma-convers.png')
+    plt.show()
     print("El número total de conversiones tipo call es", convierte_CALL)
     print("El número total de conversiones tipo form es", convierte_FORM)
 
@@ -272,15 +279,15 @@ def grafica_sectores (usuarios_repetidos,usuarios_sin_repetir):
   plt.savefig('diagrama-sectores.png')
   plt.show()
 #Imprimimos las respuestas a las preguntas
-print("RESPUESTAS")
+print(Fore.LIGHTCYAN_EX + "RESPUESTAS"+ Fore.WHITE)
 print(" ")
-print("Inicialmente se nos ofrece un dataset con", contar(df_navegacion["id_user"]), "datos")
-print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de",contar(df_navegacion1["id_user"]), "usuarios")
-print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", contar(df_navegacion_final["id_User"]), "datos")
+print("Inicialmente se nos ofrece un dataset con", Fore.MAGENTA + str(contar(df_navegacion["id_user"]))+ Fore.WHITE , "datos")
+print("Tras limpiar el dataset, eliminando aquellas filas en las que no se aportaba una URL, obtenemos un total de", Fore.MAGENTA + str( contar(df_navegacion1["id_user"])) + Fore.WHITE, "usuarios")
+print("Finalmente, tras modificar nuestros dataset y elminar aquellos usuarios repetidos obtenemos", Fore.MAGENTA + str(contar(df_navegacion_final["id_User"])) + Fore.WHITE, "datos")
 print(" ")
-print("Como el número de visitas que recibe una URL es independiente a si esta es visitada por la misma persona o no, concluimos que el número total de visitas será de ",contar(df_navegacion1["url_landing"]))
+print("Como el número de visitas que recibe una URL es independiente a si esta es visitada por la misma persona o no, concluimos que el número total de visitas será de ",  Fore.LIGHTYELLOW_EX + str(contar(df_navegacion1["url_landing"])) + Fore.WHITE )
 print("")
-print("El coche más buscado es", Onbtener_valor())
+print("El coche más buscado es", Fore.LIGHTYELLOW_EX + Onbtener_valor() + Fore.WHITE)
 print(" ")
 print(" Tras obtener la lista de 0 y 1 para comparar los usuarios y gclid coincidentes en los archivos conversiones y navegacion finalobtenemos:")
 print(conversiones_por_iduser)
@@ -289,7 +296,5 @@ print("lo que nos indica que contamos con un 0% de converisones")
 print("")
 print("Si los usiuarios del dataset navegacion_final contaran con los usuarios del dataset de conversionesentonces obtendríamos lo siguiente:")
 obtener_conversiones()
-print("El número de usuarios recurrentes es de ", usuarios_recurrentes(contar(df_navegacion1["id_user"]),  contar(df_navegacion_final["id_User"])), "%")
+print("El número de usuarios recurrentes es de ", usuarios_recurrentes(contar(df_navegacion1["id_user"]),  contar(df_navegacion_final["id_User"])), "%, aproximadamente")
 grafica_sectores(contar(df_navegacion1["id_user"])-contar(df_navegacion_final["id_User"]),  contar(df_navegacion_final["id_User"]))
-
-
