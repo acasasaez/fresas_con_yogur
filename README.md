@@ -1,5 +1,5 @@
 # fresas_con_yogur
-Para esta tarea he creado un repositorio en GitHubcon el siguiente link:
+Para esta tarea he creado un repositorio en GitHubcon el siguiente link:https://github.com/acasasaez/fresas_con_yogur.git
 
 El examen final es una tarea en la que se nos pide hacer un estudio sobre la venta de coches. 
 
